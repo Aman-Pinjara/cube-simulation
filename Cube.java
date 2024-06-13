@@ -413,6 +413,79 @@ class Cube{
             }       
         }
     }
+
+    public static ArrayList<Rotations> getMoves(String alg) throws Exception{
+        String[] movesString = alg.split(" ");
+        int len = movesString.length;
+        ArrayList<Rotations> ans = new ArrayList<>();
+        for(int i=0;i<len;i++){
+            switch(movesString[i]){
+                case "R":
+                    ans.add(Rotations.right);
+                    break;
+                case "R'":
+                    ans.add(Rotations.rightAC);
+                    break;
+                case "R2":
+                    ans.add(Rotations.rightAC);
+                    ans.add(Rotations.rightAC);
+                    break;
+                case "L":
+                    ans.add(Rotations.left);
+                    break;
+                case "L'":
+                    ans.add(Rotations.leftAC);
+                    break;
+                case "L2":
+                    ans.add(Rotations.leftAC);
+                    ans.add(Rotations.leftAC);
+                    break;
+                case "U":
+                    ans.add(Rotations.up);
+                    break;
+                case "U'":
+                    ans.add(Rotations.upAC);
+                    break;
+                case "U2":
+                    ans.add(Rotations.upAC);
+                    ans.add(Rotations.upAC);
+                    break;
+                case "D":
+                    ans.add(Rotations.bottom);
+                    break;
+                case "D'":
+                    ans.add(Rotations.bottomAC);
+                    break;
+                case "D2":
+                    ans.add(Rotations.bottomAC);
+                    ans.add(Rotations.bottomAC);
+                    break;
+                case "F":
+                    ans.add(Rotations.front);
+                    break;
+                case "F'":
+                    ans.add(Rotations.frontAC);
+                    break;
+                case "F2":
+                    ans.add(Rotations.frontAC);
+                    ans.add(Rotations.frontAC);
+                    break;
+                case "B":
+                    ans.add(Rotations.back);
+                    break;
+                case "B'":
+                    ans.add(Rotations.backAC);
+                    break;
+                case "B2":
+                    ans.add(Rotations.backAC);
+                    ans.add(Rotations.backAC);
+                    break;
+                default:
+                    throw new Exception("Invalid Move Encountered "+movesString[i]);
+            }
+        }
+        return ans;
+    }
 }
 
 enum Rotations{
