@@ -1,11 +1,11 @@
 import java.util.*;
 
 class Cube{
-    private static int front = 0;    
-    private static int back = 1;    
-    private static int right = 2;    
-    private static int left = 3;    
-    private static int top = 4;    
+    private static int front = 0;
+    private static int back = 1;
+    private static int right = 2;
+    private static int left = 3;
+    private static int top = 4;
     private static int bottom = 5;
 
     private static int red = 0;
@@ -95,8 +95,10 @@ class Cube{
     public void rotate(Rotations move){
         int[] next = new int[3];
         int[] faces = new int[4];
+        int curface;
         switch (move) {
             case back:
+                curface = back;
                 for(int i = 2;i>=0;i--){
                     next[2-i] = cube[top][0][i];
                 }
@@ -122,6 +124,7 @@ class Cube{
                 }
                 break;
             case backAC:
+                curface = back;
                 for(int i = 0;i<3;i++){
                     next[i] = cube[top][0][i];
                 }
@@ -147,6 +150,7 @@ class Cube{
                 }
                 break;
             case bottom:
+                curface = bottom;
                 for(int i = 0;i<3;i++){
                     next[i] = cube[front][2][i];
                 }
@@ -163,6 +167,7 @@ class Cube{
                 }
                 break;
             case bottomAC:
+            curface = bottom;
                 for(int i = 0;i<3;i++){
                     next[i] = cube[front][2][2-i];
                 }
@@ -179,12 +184,59 @@ class Cube{
                 }
                 break;
             case front:
-                //TODO
+                curface = front;
+                for(int i = 2;i>=0;i--){
+                    next[i] = cube[top][2][i];
+                }
+                for(int i=0;i<3;i++){
+                    int temp = cube[right][i][0];
+                    cube[right][i][0] = next[i];
+                    next[i] = temp;
+                }
+                for(int i=0;i<3;i++){
+                    int temp = cube[bottom][0][2-i];
+                    cube[bottom][0][2-i] = next[i];
+                    next[i] = temp;
+                }
+                for(int i=0;i<3;i++){
+                    int temp = cube[left][2-i][2];
+                    cube[left][2-i][2] = next[i];
+                    next[i] = temp;
+                }
+                for(int i=0;i<3;i++){
+                    int temp = cube[top][2][i];
+                    cube[top][2][i] = next[i];
+                    next[i] = temp;
+                }
                 break;
             case frontAC:
-            //Todo
+                curface = front;
+                for(int i = 0;i<3;i++){
+                    next[i] = cube[top][2][2-i];
+                }
+                for(int i=0;i<3;i++){
+                    int temp = cube[left][i][2];
+                    cube[left][i][2] = next[i];
+                    next[i] = temp;
+                }
+                for(int i=0;i<3;i++){
+                    int temp = cube[bottom][0][i];
+                    cube[bottom][0][i] = next[i];
+                    next[i] = temp;
+                }
+                for(int i=0;i<3;i++){
+                    int temp = cube[right][2-i][0];
+                    cube[right][2-i][0] = next[i];
+                    next[i] = temp;
+                }
+                for(int i=0;i<3;i++){
+                    int temp = cube[top][2][2-i];
+                    cube[top][2][2-i] = next[i];
+                    next[i] = temp;
+                }
                 break;
             case left:
+                curface = left;
                 for(int i = 0;i<3;i++){
                     next[i] = cube[top][i][0];
                 }
@@ -212,11 +264,12 @@ class Cube{
                 }
                 break;
             case leftAC:
+            curface = left;
                 for(int i = 0;i<3;i++){
                     next[i] = cube[back][i][2];
                 }
-                faces[1] = bottom;
-                faces[0] = front;
+                faces[0] = bottom;
+                faces[1] = front;
                 faces[2] = top;
                 faces[3] = -1;
                 for(int faceidx=0;faceidx<3;faceidx++){
@@ -234,6 +287,7 @@ class Cube{
                 }
                 break;
             case right:
+            curface = right;
                 for(int i = 0;i<3;i++){
                     next[i] = cube[back][i][0];
                 }
@@ -256,6 +310,7 @@ class Cube{
                 }
                 break;
             case rightAC:
+            curface = right;
                 for(int i = 0;i<3;i++){
                     next[i] = cube[back][2-i][0];
                 }
@@ -278,22 +333,7 @@ class Cube{
                 }
                 break;
             case up:
-                for(int i = 0;i<3;i++){
-                    next[i] = cube[front][2][i];
-                }
-                faces[0] = left;
-                faces[1] = back;
-                faces[2] = right;
-                faces[3] = front;
-                for(int face: faces){
-                    for(int i=0;i<3;i++){
-                        int temp = cube[face][2][i];
-                        cube[face][2][i] = next[i];
-                        next[i] = temp;
-                    }
-                }
-                break;
-            case upAC:
+            curface = top;
                 for(int i = 0;i<3;i++){
                     next[i] = cube[front][0][2-i];
                 }
@@ -309,9 +349,68 @@ class Cube{
                     }
                 }
                 break;
-            default:
+            case upAC:
+            curface = top;
+                for(int i = 0;i<3;i++){
+                    next[i] = cube[front][0][i];
+                }
+                faces[0] = right;
+                faces[1] = back;
+                faces[2] = left;
+                faces[3] = front;
+                for(int face: faces){
+                    for(int i=0;i<3;i++){
+                        int temp = cube[face][0][i];
+                        cube[face][0][i] = next[i];
+                        next[i] = temp;
+                    }
+                }
                 break;
-            
+            default:
+                curface = -1;
+                break;           
+        }
+        if(
+            move == Rotations.right ||
+            move == Rotations.left ||
+            move == Rotations.up ||
+            move == Rotations.back ||
+            move == Rotations.bottom ||
+            move == Rotations.front
+        ){
+            //clockwise face shuffle
+            for(int i=0;i<3;i++){
+                for(int j=i;j<3;j++){
+                    int temp = cube[curface][i][j];
+                    cube[curface][i][j] = cube[curface][j][i];
+                    cube[curface][j][i] = temp;
+                }
+            }
+    
+            for(int col=0;col<(3/2);col++){
+                for(int row = 0;row<3;row++){
+                    int temp = cube[curface][row][col];
+                    cube[curface][row][col] = cube[curface][row][cube[curface].length-col-1];
+                    cube[curface][row][cube[curface].length-col-1] = temp;
+                }
+            }      
+        }else{
+            //anticlockwise face shuffle
+            for(int i=0;i<3;i++){
+                for(int j=0;j<3-i;j++){
+                    int temp = cube[curface][2-i][2-j];
+                    cube[curface][2-i][2-j] = cube[curface][j][i];
+                    cube[curface][j][i] = temp;
+                }
+            }
+    
+            for(int col=0;col<(3/2);col++){
+                for(int row = 0;row<3;row++){
+                    int temp = cube[curface][row][col];
+                    cube[curface][row][col] = cube[curface][row][cube[curface].length-col-1];
+                    cube[curface][row][cube[curface].length-col-1] = temp;
+                }
+            }       
         }
     }
 }
