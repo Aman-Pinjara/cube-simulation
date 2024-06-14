@@ -1,19 +1,19 @@
 import java.util.*;
 
 class Cube{
-    private static int front = 0;
-    private static int back = 1;
-    private static int right = 2;
-    private static int left = 3;
-    private static int top = 4;
-    private static int bottom = 5;
-
-    private static int red = 0;
-    private static int orange = 1;
-    private static int blue = 2;
-    private static int green = 3;
-    private static int white = 4;
-    private static int yellow = 5;
+    public static int front = 0;
+    public static int back = 1;
+    public static int right = 2;
+    public static int left = 3;
+    public static int top = 4;
+    public static int bottom = 5;
+     
+    public static int red = 0;
+    public static int orange = 1;
+    public static int blue = 2;
+    public static int green = 3;
+    public static int white = 4;
+    public static int yellow = 5;
 
     int[][][] cube = new int[6][3][3];
 
@@ -412,6 +412,30 @@ class Cube{
                 }
             }       
         }
+    }
+
+    public boolean testFace(int face){
+        int val = cube[face][0][0];
+        for(int i=0;i<3;i++){
+            for(int j=0;j<3;j++){
+                if(cube[face][i][j] != val) return false;
+            }
+        }
+        return true;
+    }
+        
+    public boolean testF2L(){
+        if(!testFace(bottom)) return false;
+        int[] faces = {left, front, right, back};
+        for(int face : faces){
+            int val = cube[face][1][0];
+            for(int i=1;i<3;i++){
+                for(int j=0;j<3;j++){
+                    if(cube[face][i][j] != val) return false;
+                }
+            }   
+        }
+        return true;
     }
 
     public static ArrayList<Rotations> getMoves(String alg) throws Exception{
